@@ -9,6 +9,7 @@ cache:
         - "~/.platformio"
 
 env:
+    - REVIEWDOG_VERSION="0.9.11"
     # add examples here and define which boards should be tested (only compile test)
     - PLATFORMIO_CI_SRC=examples/ChangeUID/ChangeUID.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
     - PLATFORMIO_CI_SRC=examples/DumpInfo/DumpInfo.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
@@ -27,6 +28,11 @@ env:
     - PLATFORMIO_CI_SRC=examples/rfid_read_personal_data/rfid_read_personal_data.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
 
 install:
+    - go get -u github.com/golang/dep/...
+    - go get github.com/client9/misspell/cmd/misspell
+    - mkdir -p ~/bin/ && export export PATH="~/bin/:$PATH"
+    - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o ~/bin/reviewdog && chmod +x ~/bin/reviewdog
+    ########
     - pip install -U platformio
 
 script:
@@ -38,3 +44,6 @@ script:
     - board="arduino_arm";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=due --board=zero); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     - board="teensy";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=teensy20 --board=teensy31); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     - board="esp";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=d1_mini); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
+    #######################
+    - reviewdog -conf=.reviewdog.yml -reporter=github-pr-check
+ 
