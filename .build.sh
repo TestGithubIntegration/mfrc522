@@ -32,7 +32,7 @@ boardparam="--board=d1_mini";
 buildBoardParam "$TESTBOARD" "$board" "$boardparam"
 
 ## build
-output=$(platformio ci -v --lib=. $board_compile_param 2>&1 >/dev/null  | sed 's/\/tmp\/[a-zA-Z0-9_]*\/src\/[a-zA-Z0-9_]*\.ino/$PLATFORMIO_CI_SRC/g' | sed 's/lib\/[a-zA-Z0-9_]*\///g');
+output=$(platformio ci -v --lib=. $board_compile_param 2>&1 >/dev/null  | sed "s/\/tmp\/[a-zA-Z0-9_]*\/src\/[a-zA-Z0-9_]*\.ino/$PLATFORMIO_CI_SRC/g" | sed 's/lib\/[a-zA-Z0-9_]*\///g');
 echo "--<Result>--";
 echo "$output" | reviewdog -name="compiler" -efm="%f:%l:%c: %m" -diff="git diff master" -reporter=github-pr-check;
 echo "$output";
