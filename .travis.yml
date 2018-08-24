@@ -1,36 +1,50 @@
-language: go
+language: python
+python:
+  - '2.7'
 
+git:
+    depth: false
+    
 # Cache PlatformIO packages using Travis CI container-based infrastructure
+#sudo: required
 sudo: false
 cache:
     directories:
         - "~/.platformio"
 
 env:
+  global:
     - REVIEWDOG_VERSION="0.9.11"
+  matrix:
     # add examples here and define which boards should be tested (only compile test)
-    #- PLATFORMIO_CI_SRC=examples/DumpInfo/DumpInfo.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
+    - PLATFORMIO_CI_SRC=examples/DumpInfo/DumpInfo.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
 
 matrix:
   fast_finish: true
 
 install:
+    - python --version
+    ############
+    - eval "$(curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | GIMME_GO_VERSION=1.10 bash)"
+    #############
     - go get -u github.com/golang/dep/...
     - go get github.com/client9/misspell/cmd/misspell
     - mkdir -p ~/bin/ && export export PATH="~/bin/:$PATH"
     - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o ~/bin/reviewdog && chmod +x ~/bin/reviewdog
     ########
-    #- pip install -U platformio
+    - pip install -U platformio
 
 script:
     # short the string comparison
-    - stringContain() { [ -z "${2##*$1*}" ]; }
+    #- stringContain() { [ -z "${2##*$1*}" ]; }
     # selectable board tests @Rotzbua
     # prints only warnings and errors, to show all remove "1>/dev/null"
-    #- board="arduino_avr";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=uno --board=megaatmega1280); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
-    #- board="arduino_arm";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=due --board=zero); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
-    #- board="teensy";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=teensy20 --board=teensy31); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
-    #- board="esp";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=d1_mini); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
-    #######################
+    #- board="arduino_avr";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=uno --board=megaatmega1280); echo "--<Result>--"; echo "$output"; else echo "skip board test of $board"; fi
+    #- board="arduino_arm";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=due --board=zero); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
+    #- board="teensy";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=teensy20 --board=teensy31); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
+    #- board="esp";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=d1_mini); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
+    - bash ./.build.sh
+   #######################
+    #- platformio ci --lib=. --board=uno 
     - reviewdog -conf=.reviewdog.yml -reporter=github-pr-check
  
