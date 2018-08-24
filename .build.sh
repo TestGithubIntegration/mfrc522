@@ -36,7 +36,7 @@ cmd(){
 }
 
 TMP=$(mktemp)
-var=$(cmd 2> "$TMP")
+var=$($(cmd) 2> "$TMP")
 err=$(cat "$TMP")
 rm "$TMP"
 
