@@ -1,7 +1,9 @@
-language: go
+language: python
 python:
   - '2.7'
-  
+go:
+  - "1.10.x"
+
 git:
     depth: false
     
