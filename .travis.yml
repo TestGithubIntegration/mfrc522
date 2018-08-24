@@ -8,7 +8,8 @@ git:
     depth: false
     
 # Cache PlatformIO packages using Travis CI container-based infrastructure
-sudo: required
+#sudo: required
+sudo: false
 cache:
     directories:
         - "~/.platformio"
@@ -29,7 +30,7 @@ install:
     - mkdir -p ~/bin/ && export export PATH="~/bin/:$PATH"
     - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o ~/bin/reviewdog && chmod +x ~/bin/reviewdog
     ########
-    - pip install platformio || true
+    - pip install -U platformio || true
 
 script:
     # short the string comparison
