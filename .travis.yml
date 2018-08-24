@@ -1,5 +1,8 @@
 language: go
 
+git:
+    depth: false
+    
 # Cache PlatformIO packages using Travis CI container-based infrastructure
 sudo: false
 cache:
@@ -20,7 +23,7 @@ install:
     - mkdir -p ~/bin/ && export export PATH="~/bin/:$PATH"
     - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o ~/bin/reviewdog && chmod +x ~/bin/reviewdog
     ########
-    #- pip install -U platformio
+    - pip install -U platformio
 
 script:
     # short the string comparison
@@ -33,4 +36,5 @@ script:
     #- board="esp";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=d1_mini); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     #######################
     - reviewdog -conf=.reviewdog.yml -reporter=github-pr-check
+    - platformio ci --lib=. --board=uno 
  
