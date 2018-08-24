@@ -13,6 +13,11 @@ cache:
     directories:
         - "~/.platformio"
 
+addons:
+  apt:
+    packages:
+      - golang
+      
 env:
     - REVIEWDOG_VERSION="0.9.11"
     # add examples here and define which boards should be tested (only compile test)
