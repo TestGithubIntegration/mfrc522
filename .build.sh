@@ -31,15 +31,24 @@ board="esp";
 boardparam="--board=d1_mini";
 buildBoardParam "$TESTBOARD" "$board" "$boardparam"
 
+cmd(){
+        platformio ci -v --lib=. "$board_compile_param";
+}
+
+TMP=$(mktemp)
+var=$(cmd 2> "$TMP")
+err=$(cat "$TMP")
+rm "$TMP"
+
 ## build
-output_unfiltered="";
-output_errors=$(platformio ci -v --lib=. "$board_compile_param" 2>&1 >$output_unfiltered;
+output_unfiltered=$var;
+output_errors=$err;
 # filter and correct output for reviewdog
 output_reviewdog=$output_errors;
 # correct path to example file to report
 output_reviewdog=$(echo "$output_reviewdog" | sed "s/\/tmp\/[a-zA-Z0-9_]*\/src\/[a-zA-Z0-9_]*\.ino/${PLATFORMIO_CI_SRC//\//\\/}/g");
 # correct path to library files to report
-output_reviewdog=$(echo "$output_reviewdog" | sed 's/lib\/[a-zA-Z0-9_]*\///g'));
+output_reviewdog=$(echo "$output_reviewdog" | sed 's/lib\/[a-zA-Z0-9_]*\///g');
 echo "--<Result>--";
 echo '###############';
 echo "$output_reviewdog" | reviewdog -name="compiler" -efm="%f:%l:%c: %m" -diff="git diff master" -reporter=github-pr-check;
