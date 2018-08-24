@@ -32,4 +32,5 @@ buildBoardParam "$TESTBOARD" "$board" "$boardparam"
 ## build
 output=$(platformio ci -v --lib=. "$boardparam");
 echo "--<Result>--";
+echo "$output";
 echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])";
