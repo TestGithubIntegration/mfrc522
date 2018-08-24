@@ -36,14 +36,14 @@ install:
 
 script:
     # short the string comparison
-    - stringContain() { [ -z "${2##*$1*}" ]; }
+    #- stringContain() { [ -z "${2##*$1*}" ]; }
     # selectable board tests @Rotzbua
     # prints only warnings and errors, to show all remove "1>/dev/null"
     #- board="arduino_avr";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=uno --board=megaatmega1280); echo "--<Result>--"; echo "$output"; else echo "skip board test of $board"; fi
     #- board="arduino_arm";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=due --board=zero); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     #- board="teensy";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=teensy20 --board=teensy31); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     #- board="esp";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=d1_mini); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
-    - /.build.sh
+    - ./.build.sh
    #######################
     #- platformio ci --lib=. --board=uno 
     - reviewdog -conf=.reviewdog.yml -reporter=github-pr-check
