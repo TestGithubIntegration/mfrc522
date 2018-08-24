@@ -1,4 +1,6 @@
 #!/bin/bash
+set -ev # fail fast and hard
+
 board_compile_param=""; # global variable
 
 stringContain() { [ -z "${2##*$1*}" ]; }
