@@ -1,4 +1,4 @@
-language: python
+language: go
 python:
   - '2.7'
 go:
@@ -8,7 +8,7 @@ git:
     depth: false
     
 # Cache PlatformIO packages using Travis CI container-based infrastructure
-sudo: false
+sudo: true
 cache:
     directories:
         - "~/.platformio"
