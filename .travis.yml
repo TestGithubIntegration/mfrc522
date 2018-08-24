@@ -28,14 +28,14 @@ matrix:
 
 install:
     - python --version
-    - pip install --upgrade pip
+    - sudo pip install --upgrade pip
     ############
     - go get -u github.com/golang/dep/...
     - go get github.com/client9/misspell/cmd/misspell
     - mkdir -p ~/bin/ && export export PATH="~/bin/:$PATH"
     - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o ~/bin/reviewdog && chmod +x ~/bin/reviewdog
     ########
-    - pip install -U platformio
+    - sudo pip install -U platformio
 
 script:
     # short the string comparison
