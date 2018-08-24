@@ -43,7 +43,8 @@ script:
     #- board="arduino_arm";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=due --board=zero); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     #- board="teensy";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=teensy20 --board=teensy31); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     #- board="esp";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=d1_mini); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
-    - chmod ugo+x ./.build.sh && ./.build.sh
+    #- chmod ugo+x ./.build.sh
+    - bash ./.build.sh
    #######################
     #- platformio ci --lib=. --board=uno 
     - reviewdog -conf=.reviewdog.yml -reporter=github-pr-check
