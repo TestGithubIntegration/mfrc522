@@ -30,7 +30,7 @@ boardparam="--board=d1_mini";
 buildBoardParam "$TESTBOARD" "$board" "$boardparam"
 
 ## build
-output=$(platformio ci -v --lib=. "$boardparam");
+output=$(platformio ci -v --lib=. "$board_compile_param");
 echo "--<Result>--";
 echo "$output";
 echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])";
