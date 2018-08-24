@@ -1,5 +1,7 @@
 language: go
-
+python:
+  - '2.7'
+  
 git:
     depth: false
     
