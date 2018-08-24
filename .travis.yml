@@ -30,7 +30,7 @@ install:
     - mkdir -p ~/bin/ && export export PATH="~/bin/:$PATH"
     - curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o ~/bin/reviewdog && chmod +x ~/bin/reviewdog
     ########
-    - pip install -U platformio || true
+    - pip install -U platformio
 
 script:
     # short the string comparison
