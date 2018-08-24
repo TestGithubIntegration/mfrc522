@@ -20,6 +20,8 @@ matrix:
   fast_finish: true
 
 install:
+    - python --version
+    ############
     - go get -u github.com/golang/dep/...
     - go get github.com/client9/misspell/cmd/misspell
     - mkdir -p ~/bin/ && export export PATH="~/bin/:$PATH"
