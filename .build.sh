@@ -34,6 +34,6 @@ buildBoardParam "$TESTBOARD" "$board" "$boardparam"
 ## build
 output=$(platformio ci -v --lib=. $board_compile_param);
 echo "--<Result>--";
-echo "$output" | reviewdog -efm="%f:%l:%c: %m" -diff="git diff master" -reporter=github-pr-check;
+echo "$output" | reviewdog -name="compiler" -efm="%f:%l:%c: %m" -diff="git diff master" -reporter=github-pr-check;
 echo "$output";
 echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])";
