@@ -1,4 +1,4 @@
-language: go
+language: python
 python:
   - '2.7'
 go:
@@ -42,6 +42,6 @@ script:
     #- board="teensy";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=teensy20 --board=teensy31); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     #- board="esp";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; ouput=$(platformio ci --lib=. --board=d1_mini); echo "--<Result>--"; echo "$ouput" | grep -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     #######################
-    - reviewdog -conf=.reviewdog.yml -reporter=github-pr-check
     - platformio ci --lib=. --board=uno 
+    - reviewdog -conf=.reviewdog.yml -reporter=github-pr-check
  
