@@ -25,6 +25,8 @@ matrix:
 install:
     - python --version
     ############
+    - eval "$(curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | GIMME_GO_VERSION=1.10 bash)"
+    #############
     - go get -u github.com/golang/dep/...
     - go get github.com/client9/misspell/cmd/misspell
     - mkdir -p ~/bin/ && export export PATH="~/bin/:$PATH"
