@@ -23,7 +23,6 @@ matrix:
 
 install:
     - python --version
-    - sudo pip install --upgrade pip
     ############
     - go get -u github.com/golang/dep/...
     - go get github.com/client9/misspell/cmd/misspell
