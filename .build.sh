@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ev # fail fast and hard
 
+echo "Test example: $PLATFORMIO_CI_SRC";
+
 board_compile_param=""; # global variable
 
 stringContain() { [ -z "${2##*$1*}" ]; }
