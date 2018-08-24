@@ -1,8 +1,6 @@
 language: python
 python:
   - '2.7'
-go:
-  - "1.10.x"
 
 git:
     depth: false
@@ -17,7 +15,7 @@ cache:
 env:
     - REVIEWDOG_VERSION="0.9.11"
     # add examples here and define which boards should be tested (only compile test)
-    #- PLATFORMIO_CI_SRC=examples/DumpInfo/DumpInfo.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
+    - PLATFORMIO_CI_SRC=examples/DumpInfo/DumpInfo.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
 
 matrix:
   fast_finish: true
