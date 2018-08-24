@@ -13,7 +13,9 @@ cache:
         - "~/.platformio"
 
 env:
+  global:
     - REVIEWDOG_VERSION="0.9.11"
+  matrix:
     # add examples here and define which boards should be tested (only compile test)
     - PLATFORMIO_CI_SRC=examples/DumpInfo/DumpInfo.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
 
