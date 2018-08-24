@@ -31,10 +31,11 @@ board="esp";
 boardparam="--board=d1_mini";
 buildBoardParam "$TESTBOARD" "$board" "$boardparam"
 
+buildBoardParam='--board=uno'
 
 
 TMP=$(mktemp)
-var=$( platformio ci -v --lib=. "$board_compile_param" 2> "$TMP")
+var=$(platformio ci -v --lib=. "$board_compile_param" 2> "$TMP")
 err=$(cat "$TMP")
 rm "$TMP"
 
