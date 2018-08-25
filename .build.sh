@@ -53,6 +53,8 @@ echo "--<Result>--";
 echo '###############';
 echo "$output_reviewdog" | reviewdog -name="compiler" -efm="%f:%l:%c: %m" -diff="git diff master" -reporter=github-pr-check;
 echo '###############';
+echo "$output_reviewdog";
+echo '###############';
 echo "$output_unfiltered";
 echo '###############';
 echo "$output_unfiltered" | grep -i -E "^(Device|Data|Program|text|[0-9])";
