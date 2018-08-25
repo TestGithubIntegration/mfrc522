@@ -43,7 +43,7 @@ matrix:
 install:
     - python --version
     ## cppcheck
-    - bash ./cppcheck.sh
+    - bash .build_cppcheck.sh
     ############
     - eval "$(curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | GIMME_GO_VERSION=1.10 bash)"
     #############
