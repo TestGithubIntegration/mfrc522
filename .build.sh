@@ -1,5 +1,6 @@
 #!/bin/bash
-set -ev # fail fast and hard
+#set -ev # fail fast and hard
+set -v # fail fast and hard
 
 echo "Test example: $PLATFORMIO_CI_SRC";
 
