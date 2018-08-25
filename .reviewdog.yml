@@ -6,7 +6,7 @@ runner:
     errorformat:
       - "%f:%l:%c: %m"
   cppcheck:
-    cmd: cppcheck --std=c++11 --enable=all --template="{file}:{line}:{column}: ({severity}) {message} {callstack}" $(git ls-files)
+    cmd: "cppcheck --std=c++11 --enable=all --template='{file}:{line}:{column}: ({severity}) {message} {callstack}' $(git ls-files)"
     errorformat:
       - "%f:%l:%c: %m"
       
