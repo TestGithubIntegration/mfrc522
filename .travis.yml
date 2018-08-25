@@ -7,19 +7,32 @@ git:
 
 addons:
   apt:
+    sources:
+      # needed to build a recent cppcheck
+      - ubuntu-toolchain-r-test
     packages:
-      - cppcheck
-
+      #- cppcheck
+      # needed to build a recent cppcheck
+      - libstdc++6
+      # libpcre3-dev is needed to build a recent cppcheck
+      - libpcre3-dev
+      
 # Cache PlatformIO packages using Travis CI container-based infrastructure
 #sudo: required
 sudo: false
 cache:
     directories:
         - "~/.platformio"
+        - $CACHED
 
 env:
   global:
     - REVIEWDOG_VERSION="0.9.11"
+    # cppcheck
+    - VERSION=1.83
+    - NAMEVER=cppcheck-${VERSION}
+    - CACHED=$HOME/cached 
+
   matrix:
     # add examples here and define which boards should be tested (only compile test)
     - PLATFORMIO_CI_SRC=examples/DumpInfo/DumpInfo.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
@@ -29,6 +42,8 @@ matrix:
 
 install:
     - python --version
+    ## cppcheck
+    - bash ./cppcheck.sh
     ############
     - eval "$(curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | GIMME_GO_VERSION=1.10 bash)"
     #############
