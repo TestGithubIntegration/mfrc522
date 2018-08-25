@@ -32,29 +32,35 @@ board="esp";
 boardparam="--board=d1_mini";
 buildBoardParam "$TESTBOARD" "$board" "$boardparam"
 
-buildBoardParam='--board=uno'
 
+buildMe(){
+        board=$1;
+        echo '***build***';
+        echo "board: $board";
+        
+        TMP=$(mktemp);
+        var=$(platformio ci -v --lib=. --board="$board" 2> "$TMP");
+        err=$(cat "$TMP");
+        rm "$TMP";
 
-TMP=$(mktemp)
-var=$(platformio ci -v --lib=. --board=uno 2> "$TMP")
-err=$(cat "$TMP")
-rm "$TMP"
+        ## build
+        output_unfiltered=$var;
+        output_errors=$err;
+        # filter and correct output for reviewdog
+        output_reviewdog=$output_errors;
+        # correct path to example file to report
+        output_reviewdog=$(echo "$output_reviewdog" | sed "s/\/tmp\/[a-zA-Z0-9_]*\/src\/[a-zA-Z0-9_]*\.ino/${PLATFORMIO_CI_SRC//\//\\/}/g");
+        # correct path to library files to report
+        output_reviewdog=$(echo "$output_reviewdog" | sed 's/lib\/[a-zA-Z0-9_]*\///g');
+        echo "--<Result>--";
+        echo '###############';
+        echo "$output_reviewdog" | reviewdog -name="build_$board" -efm="%f:%l:%c: %m" -diff="git diff master" -reporter=github-pr-check;
+        echo '###############';
+        echo "$output_reviewdog";
+        echo '###############';
+        echo "$output_unfiltered";
+        echo '###############';
+        echo "$output_unfiltered" | grep -i -E "^(Device|Data|Program|text|[0-9])";
+}
 
-## build
-output_unfiltered=$var;
-output_errors=$err;
-# filter and correct output for reviewdog
-output_reviewdog=$output_errors;
-# correct path to example file to report
-output_reviewdog=$(echo "$output_reviewdog" | sed "s/\/tmp\/[a-zA-Z0-9_]*\/src\/[a-zA-Z0-9_]*\.ino/${PLATFORMIO_CI_SRC//\//\\/}/g");
-# correct path to library files to report
-output_reviewdog=$(echo "$output_reviewdog" | sed 's/lib\/[a-zA-Z0-9_]*\///g');
-echo "--<Result>--";
-echo '###############';
-echo "$output_reviewdog" | reviewdog -name="compiler" -efm="%f:%l:%c: %m" -diff="git diff master" -reporter=github-pr-check;
-echo '###############';
-echo "$output_reviewdog";
-echo '###############';
-echo "$output_unfiltered";
-echo '###############';
-echo "$output_unfiltered" | grep -i -E "^(Device|Data|Program|text|[0-9])";
+buildMe 'uno';
