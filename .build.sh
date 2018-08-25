@@ -28,7 +28,8 @@ buildMe(){
         output_reviewdog=$(echo "$output_reviewdog" | sed 's/lib\/[a-zA-Z0-9_]*\///g');
         echo "--<Result>--";
         echo '###############';
-        echo "$output_reviewdog" | reviewdog -name="build_$board" -efm="%f:%l:%c: %m" -diff="git diff master" -reporter=github-pr-check;
+#        echo "$output_reviewdog" | reviewdog -name="build_$board" -efm="%f:%l:%c: %m" -diff="git diff" -reporter=github-pr-check;
+        echo "$output_reviewdog" | reviewdog -name="build_$board" -efm="%f:%l:%c: %m" -reporter=github-pr-check;
         echo '###############';
         echo "$output_reviewdog";
         echo '###############';
@@ -44,7 +45,7 @@ buildBoardParam() {
                 arr=( "$3" )
                 for i in "${arr[@]}";
                         do
-                                echo "Build board: $i"
+                                echo "Trigger build for board: $i"
                                 buildMe "$i"
                         done
         else
@@ -61,10 +62,10 @@ board='arduino_arm';
 boardparam=('due' 'zero');
 buildBoardParam "$TESTBOARD" "$board" "${boardparam[@]}"
 
-board="teensy";
-boardparam=("teensy20" "teensy31"); 
+board='teensy';
+boardparam=('teensy20' 'teensy31'); 
 buildBoardParam "$TESTBOARD" "$board" "${boardparam[@]}"
 
-board="esp";
-boardparam=("d1_mini");
+board='esp';
+boardparam=('d1_mini');
 buildBoardParam "$TESTBOARD" "$board" "${boardparam[@]}"
