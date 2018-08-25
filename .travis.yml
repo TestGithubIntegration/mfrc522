@@ -4,7 +4,12 @@ python:
 
 git:
     depth: false
-    
+
+addons:
+  apt:
+    packages:
+      - cppcheck
+
 # Cache PlatformIO packages using Travis CI container-based infrastructure
 #sudo: required
 sudo: false
