@@ -23,6 +23,7 @@ sudo: false
 cache:
     directories:
         - "~/.platformio"
+        - "$HOME/.cache/pip/"
         - $CACHED
 
 env:
