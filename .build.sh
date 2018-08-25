@@ -42,7 +42,9 @@ buildMe(){
 buildBoardParam() {
         if stringContain "$2" "$1";
                 then echo "check board group $board";
-                arr=( "$3" )
+                shift # $1
+                shift # $2
+                arr=( "$@" ) # grab remaining arguments
                 for i in "${arr[@]}";
                         do
                                 echo "Trigger build for board: $i"
