@@ -1,3 +1,5 @@
+mispell
+
 MFRC522
 =======
 
