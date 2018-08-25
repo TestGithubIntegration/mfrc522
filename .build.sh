@@ -36,7 +36,7 @@ buildBoardParam='--board=uno'
 
 
 TMP=$(mktemp)
-var=$(platformio ci -v --lib=. "$board_compile_param" 2> "$TMP")
+var=$(platformio ci -v --lib=. --board=uno 2> "$TMP")
 err=$(cat "$TMP")
 rm "$TMP"
 
