@@ -87,10 +87,10 @@ buildBoardParam "$TESTBOARD" "$board" "${boardparam[@]}"
 
 
 ${CACHED}/${NAMEVER}/cppcheck --version
-cppcheck_example=$(${CACHED}/${NAMEVER}/cppcheck --std=c++11 --enable=warning,style,performance,portability --template='{file}:{line}:{column}: {severity}: {message} {callstack}' $(find examples/ -regextype posix-extended -regex ".*\.(h|c|hpp|cpp|ino)") 2>&1);
+cppcheck_example=$(${CACHED}/${NAMEVER}/cppcheck --std=c++11 --enable=warning,style,performance,portability --template='{file}:{line}:{column}: {severity}: {message} {callstack}' $(find examples/ -regextype posix-extended -regex ".*\.(h|c|hpp|cpp|ino)") 2>&1 1>/dev/null);
 echo "$cppcheck_example";
 echo "$cppcheck_example" | reviewdog -name="cppcheck_examples" -efm="%f:%l:%c: %m" -reporter=github-pr-check;
 
-cppcheck_example=$(${CACHED}/${NAMEVER}/cppcheck --std=c++11 --enable=warning,style,performance,portability --template='{file}:{line}:{column}: {severity}: {message} {callstack}' $(find src/ -regextype posix-extended -regex ".*\.(h|c|hpp|cpp)") 2>&1);
+cppcheck_example=$(${CACHED}/${NAMEVER}/cppcheck --std=c++11 --enable=warning,style,performance,portability --template='{file}:{line}:{column}: {severity}: {message} {callstack}' $(find src/ -regextype posix-extended -regex ".*\.(h|c|hpp|cpp)") 2>&1 1>/dev/null);
 echo "$cppcheck_example";
 echo "$cppcheck_example" | reviewdog -name="cppcheck_source" -efm="%f:%l:%c: %m" -reporter=github-pr-check;
