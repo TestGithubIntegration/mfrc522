@@ -29,7 +29,7 @@ env:
   global:
     - REVIEWDOG_VERSION="0.9.11"
     # cppcheck
-    - VERSION=1.83
+    - VERSION=1.84
     - NAMEVER=cppcheck-${VERSION}
     - CACHED=$HOME/cached 
 
