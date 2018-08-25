@@ -6,10 +6,10 @@ runner:
     errorformat:
       - "%f:%l:%c: %m"
   cppcheck_source:
-    cmd: "cppcheck --std=c++11 --enable=all --template='{file}:{line}:{column}: ({severity}) {message} {callstack}' $(find src/ -regextype posix-extended -regex '.*\.(h|c|hpp|cpp)')"
+    cmd: "cppcheck --std=c++11 --enable=all --template='{file}:{line}:{column}: ({severity}) {message} {callstack}' $(find src/ -regextype posix-extended -regex \".*\.(h|c|hpp|cpp)\")"
     errorformat:
       - "%f:%l:%c: %m"
   cppcheck_examples:
-    cmd: "cppcheck --std=c++11 --enable=all --template='{file}:{line}:{column}: ({severity}) {message} {callstack}' $(find examples/ -regextype posix-extended -regex '.*\.(h|c|hpp|cpp|ino)')"
+    cmd: "cppcheck --std=c++11 --enable=all --template='{file}:{line}:{column}: ({severity}) {message} {callstack}' $(find examples/ -regextype posix-extended -regex \".*\.(h|c|hpp|cpp|ino)\")"
     errorformat:
       - "%f:%l:%c: %m"      
