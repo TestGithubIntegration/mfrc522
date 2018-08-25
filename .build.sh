@@ -85,4 +85,11 @@ boardparam=('d1_mini');
 buildBoardParam "$TESTBOARD" "$board" "${boardparam[@]}"
 
 
-cppcheck --std=c++11 --enable=warning,style,performance,portability --template='{file}:{line}:{column}: ({severity}) {message} {callstack}' $(find examples/ -regextype posix-extended -regex ".*\.(h|c|hpp|cpp|ino)") | reviewdog -name="cppcheck_examples" -efm="%f:%l:%c: %m" -reporter=github-pr-check;
+cppcheck --version
+cppcheck_example=$(cppcheck --std=c++11 --enable=warning,style,performance,portability --template='{file}:{line}:{column}: ({severity}) {message} {callstack}' $(find examples/ -regextype posix-extended -regex ".*\.(h|c|hpp|cpp|ino)"));
+echo "$cppcheck_example";
+echo "$cppcheck_example" | reviewdog -name="cppcheck_examples" -efm="%f:%l:%c: %m" -reporter=github-pr-check;
+
+cppcheck_example=$(cppcheck --std=c++11 --enable=warning,style,performance,portability --template='{file}:{line}:{column}: ({severity}) {message} {callstack}' $(find src/ -regextype posix-extended -regex ".*\.(h|c|hpp|cpp)"));
+echo "$cppcheck_example";
+echo "$cppcheck_example" | reviewdog -name="cppcheck_source" -efm="%f:%l:%c: %m" -reporter=github-pr-check;
