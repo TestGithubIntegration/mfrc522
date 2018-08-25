@@ -41,7 +41,7 @@ buildMe(){
 buildBoardParam() {
         if stringContain "$2" "$1";
                 then echo "check board group $board";
-                arr=( "$@" )
+                arr=( "$3" )
                 for i in "${arr[@]}";
                         do
                                 echo "Build board: $i"
@@ -53,12 +53,12 @@ buildBoardParam() {
 }
 
 
-board="arduino_avr";
-boardparam=("uno" "megaatmega1280");
+board='arduino_avr';
+boardparam=('uno' 'megaatmega1280');
 buildBoardParam "$TESTBOARD" "$board" "${boardparam[@]}"
 
-board="arduino_arm";
-boardparam=("due" "zero");
+board='arduino_arm';
+boardparam=('due' 'zero');
 buildBoardParam "$TESTBOARD" "$board" "${boardparam[@]}"
 
 board="teensy";
