@@ -4,17 +4,36 @@ python:
 
 git:
     depth: false
-    
+
+addons:
+  apt:
+    sources:
+      # needed to build a recent cppcheck
+      - ubuntu-toolchain-r-test
+    packages:
+      #- cppcheck
+      # needed to build a recent cppcheck
+      - libstdc++6
+      # libpcre3-dev is needed to build a recent cppcheck
+      - libpcre3-dev
+      
 # Cache PlatformIO packages using Travis CI container-based infrastructure
 #sudo: required
 sudo: false
 cache:
     directories:
         - "~/.platformio"
+        - "$HOME/.cache/pip/"
+        - $CACHED
 
 env:
   global:
     - REVIEWDOG_VERSION="0.9.11"
+    # cppcheck
+    - VERSION=1.84
+    - NAMEVER=cppcheck-${VERSION}
+    - CACHED=$HOME/cached 
+
   matrix:
     # add examples here and define which boards should be tested (only compile test)
     - PLATFORMIO_CI_SRC=examples/DumpInfo/DumpInfo.ino TESTBOARD=arduino_avr,arduino_arm,teensy,esp
@@ -24,6 +43,8 @@ matrix:
 
 install:
     - python --version
+    ## cppcheck
+    - bash .build_cppcheck.sh
     ############
     - eval "$(curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | GIMME_GO_VERSION=1.10 bash)"
     #############
@@ -44,6 +65,7 @@ script:
     #- board="teensy";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=teensy20 --board=teensy31); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     #- board="esp";  if stringContain "$board" "$TESTBOARD"; then echo "check board $board"; output=$(platformio ci -v --lib=. --board=d1_mini); echo "--<Result>--"; echo "$output" | grep -i -E "^(Device|Data|Program|text|[0-9])"; else echo "skip board test of $board"; fi
     - bash ./.build.sh
+    - bash ./.cppcheck.sh
    #######################
     #- platformio ci --lib=. --board=uno 
     - reviewdog -conf=.reviewdog.yml -reporter=github-pr-check
